@@ -46,12 +46,28 @@ router.post("/add/", async function(req, res, next) {
   }
 });
 
+/** Handle searching customer list. */
+//does this ned to be a post request for my form to work?
+router.get("/search/:searchName", async function (req, res, next) {
+    try {
+        const results = await Customer.find({ fullName: req.params.searchName})
+
+        if (results) {
+            res.render(`/search/`, { results });
+        } else {
+            console.log(`No Results Found For ${searchName}`)
+        }
+    } catch (err) {
+        return next(err);
+    }
+});
+
+
 /** Show a customer, given their ID. */
 
 router.get("/:id/", async function(req, res, next) {
   try {
     const customer = await Customer.get(req.params.id);
-    // await customer.fullName()
     const reservations = await customer.getReservations();
 
     return res.render("customer_detail.html", { customer, reservations });
