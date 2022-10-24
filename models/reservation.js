@@ -39,6 +39,21 @@ class Reservation {
         return results.rows.map(row => new Reservation(row));
     }
 
+
+    // async getMostReservations() {
+    //     const resResults = await db.query(
+    //         `SELECT id, 
+    //         customer_id AS "customerId"
+    //         FROM reservations 
+    //         GROUP BY customer_id
+    //         ORDER BY COUNT(id) DESC
+    //         LIMIT 10`
+    //     );
+
+    //     return resResults.rows.map(row => new Reservation(row));
+    // }
+
+
     async save() {
         if (this.id === undefined) {
             const result = await db.query(
